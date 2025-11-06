@@ -9,12 +9,10 @@
                 <i class="fas fa-bars w-6 h-6 mt-2"></i>
             </button>
             <div class="relative">
-                <select
-                    class="px-3 py-2 text-1sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 appearance-none w-[100px] sm:w-[200px]">
-                    <option>Company Selection</option>
-                    <option>Company 1</option>
-                    <option>Company 2</option>
-                </select>
+                <button id="openCompanyModal" type="button"
+                    class="px-3 py-2 text-1sm text-gray-900 bg-white border border-gray-200 font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 appearance-none w-[100px] sm:w-[200px] hover:bg-blue-50 hover:text-[#0C3183]">
+                    Select Company
+                </button>
             </div>
         </div>
         <div class="flex items-center space-x-4">

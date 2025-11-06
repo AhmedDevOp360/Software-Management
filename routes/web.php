@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\DashboardController;
 
 // Public routes
 Route::middleware('guest')->group(function () {
@@ -22,9 +23,10 @@ Route::middleware('guest')->group(function () {
 
 // Protected routes
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    // API route for fetching companies
+    Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->name('api.companies');
 });

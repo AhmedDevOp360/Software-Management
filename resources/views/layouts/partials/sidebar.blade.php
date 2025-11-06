@@ -58,6 +58,15 @@
                     <span class="ms-3">Settings</span>
                 </a>
             </li>
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center p-2 text-gray-500 rounded-[20px] hover:text-red-600 hover:bg-red-50 group">
+                        <i class="fas fa-sign-out-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-red-600"></i>
+                        <span class="ms-3">Logout</span>
+                    </button>
+                </form>
+            </li>
         </ul>
     </div>
 </aside>

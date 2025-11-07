@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Exports\UsersExport;
+use App\Exports\UsersTemplateExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class UserController extends Controller
 {
@@ -118,5 +123,60 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Export users to Excel
+     */
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users-' . date('Y-m-d-His') . '.xlsx');
+    }
+
+    /**
+     * Import users from Excel
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
+
+        try {
+            Excel::import(new UsersImport, $request->file('file'));
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Users imported successfully!');
+        } catch (ValidationException $e) {
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $row = $failure->row();
+                $attribute = $failure->attribute();
+                $errors = $failure->errors();
+                $values = $failure->values();
+
+                foreach ($errors as $error) {
+                    $errorMessages[] = "Row {$row}: {$error}";
+                }
+            }
+
+            $errorMessage = implode('<br>', $errorMessages);
+
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Validation errors occurred during import:<br>' . $errorMessage);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Error importing users: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Download import template
+     */
+    public function downloadTemplate()
+    {
+        return Excel::download(new UsersTemplateExport, 'users-import-template.xlsx');
     }
 }

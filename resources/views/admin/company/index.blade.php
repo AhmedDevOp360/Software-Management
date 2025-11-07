@@ -2,22 +2,76 @@
 
 @section('content')
 
+    @if (session('success'))
+        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flash-message-box" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flash-message-box" role="alert">
+            <span class="block sm:inline">{!! session('error') !!}</span>
+        </div>
+    @endif
+
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">Companies</h1>
 
         <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <a
+            <a href="{{ route('admin.companies.export') }}"
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Export Data">
                 <i class="text-gray-500 fa fa-download"></i>
             </a>
-            <a
+            <button onclick="document.getElementById('importModal').classList.remove('hidden')"
                 class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
                 <i class="text-gray-500 fa fa-upload"></i>
-            </a>
+            </button>
             <a href="{{ route('admin.companies.create') }}"
-                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm border-r border-gray-200 flex" title="Import Data">
+                class=" px-5 py-3 font-semibold text-gray-500 hover:text-[#0C3183] hover:bg-blue-50 text-sm flex" title="Create Company">
                 <i class="text-gray-500 fa fa-plus"></i>
             </a>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">Import Companies</h3>
+                <button onclick="document.getElementById('importModal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+            <form action="{{ route('admin.companies.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Excel File</label>
+                    <input type="file" name="file" accept=".xlsx,.xls,.csv" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183]">
+                    <p class="text-xs text-gray-500 mt-2">Supported formats: Excel (.xlsx, .xls) and CSV</p>
+                </div>
+
+                <div class="mb-4">
+                    <a href="{{ route('admin.companies.template') }}"
+                        class="text-[#0C3183] hover:underline text-sm flex items-center gap-2">
+                        <i class="fa fa-download"></i>
+                        Download Import Template
+                    </a>
+                </div>
+
+                <div class="flex gap-3 justify-end">
+                    <button type="button" onclick="document.getElementById('importModal').classList.add('hidden')"
+                        class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
+                        Import
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

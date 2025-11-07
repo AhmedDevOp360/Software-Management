@@ -7,6 +7,11 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\CompaniesExport;
+use App\Exports\CompaniesTemplateExport;
+use App\Imports\CompaniesImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class CompanyController extends Controller
 {
@@ -172,5 +177,60 @@ class CompanyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Export companies to Excel
+     */
+    public function export()
+    {
+        return Excel::download(new CompaniesExport, 'companies-' . date('Y-m-d-His') . '.xlsx');
+    }
+
+    /**
+     * Import companies from Excel
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
+
+        try {
+            Excel::import(new CompaniesImport, $request->file('file'));
+
+            return redirect()->route('admin.companies.index')
+                ->with('success', 'Companies imported successfully!');
+        } catch (ValidationException $e) {
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $row = $failure->row();
+                $attribute = $failure->attribute();
+                $errors = $failure->errors();
+                $values = $failure->values();
+
+                foreach ($errors as $error) {
+                    $errorMessages[] = "Row {$row}: {$error}";
+                }
+            }
+
+            $errorMessage = implode('<br>', $errorMessages);
+
+            return redirect()->route('admin.companies.index')
+                ->with('error', 'Validation errors occurred during import:<br>' . $errorMessage);
+        } catch (\Exception $e) {
+            return redirect()->route('admin.companies.index')
+                ->with('error', 'Error importing companies: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Download import template
+     */
+    public function downloadTemplate()
+    {
+        return Excel::download(new CompaniesTemplateExport, 'companies-import-template.xlsx');
     }
 }

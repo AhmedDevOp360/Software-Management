@@ -27,7 +27,18 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Company import/export routes
+    Route::get('/companies/export', [CompanyController::class, 'export'])->name('companies.export');
+    Route::post('/companies/import', [CompanyController::class, 'import'])->name('companies.import');
+    Route::get('/companies/template', [CompanyController::class, 'downloadTemplate'])->name('companies.template');
+
     Route::resource('companies', CompanyController::class);
+
+    // User import/export routes
+    Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
+    Route::post('/users/import', [UserController::class, 'import'])->name('users.import');
+    Route::get('/users/template', [UserController::class, 'downloadTemplate'])->name('users.template');
+
     Route::resource('users', UserController::class);
     // API route for fetching companies
     Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->name('api.companies');

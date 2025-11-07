@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -37,6 +38,13 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
+            // Store company_id in session for global scope
+            $companyId = \DB::table('users')
+                ->where('id', Auth::id())
+                ->value('company_id');
+
+            $request->session()->put('company_id', $companyId);
+
             return redirect()->intended('/');
         }
 
@@ -55,6 +63,7 @@ class LoginController extends Controller
     {
         Auth::logout();
 
+        $request->session()->forget('company_id');
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

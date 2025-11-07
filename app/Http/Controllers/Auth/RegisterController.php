@@ -81,6 +81,9 @@ class RegisterController extends Controller
             // Log the user in
             Auth::login($user);
 
+            // Store company_id in session for global scope
+            session(['company_id' => $company->id]);
+
             return redirect('/')->with('success', 'Registration completed successfully!');
         } catch (\Exception $e) {
             DB::rollBack();

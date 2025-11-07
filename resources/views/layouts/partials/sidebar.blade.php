@@ -17,20 +17,20 @@
         </div>
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="#" class="flex items-center p-2 text-[#0C3183] rounded-[20px] bg-blue-50 group">
-                    <i class="fas fa-tachometer-alt w-5 h-5 text-[#0C3183]"></i>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-tachometer-alt w-5 h-5 {{ request()->routeIs('admin.dashboard')? 'text-[#0C3183]': 'text-gray-500'}} group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-building w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                <a href="{{ route('admin.companies.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.companies.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-building w-5 h-5 {{ request()->routeIs('admin.companies.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Companies</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-users w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                <a href="{{ route('admin.users.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.users.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-users w-5 h-5 {{ request()->routeIs('admin.users.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Users</span>
                 </a>
             </li>

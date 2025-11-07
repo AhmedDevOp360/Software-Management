@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -22,11 +24,12 @@ Route::middleware('guest')->group(function () {
 });
 
 // Protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
+    Route::resource('companies', CompanyController::class);
+    Route::resource('users', UserController::class);
     // API route for fetching companies
     Route::get('/api/companies', [DashboardController::class, 'getCompanies'])->name('api.companies');
 });
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

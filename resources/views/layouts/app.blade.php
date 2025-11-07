@@ -7,8 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Management Software</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 1.3em;
+            height: 1.3em;
+            border-radius: 1em;
+            background-color: #fff;
+            cursor: pointer;
+            position: relative;
+        }
+        input[type=checkbox]:checked {
+            print-color-adjust: exact;
+            background-image: url({{ asset('assets/images/checkbox-circle.png') }});
+            background-repeat: no-repeat;
+            background-size: 1.3em 1.3em;
+            background-position: center;
+        }
+    </style>
+
 </head>
 
 <body class="bg-gray-50">

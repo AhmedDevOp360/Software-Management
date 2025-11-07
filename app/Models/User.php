@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,9 @@ class User extends Authenticatable
         'password',
         'company_id',
         'role',
+        'functions',
+        'visible_company_ids',
+        'admin_functions',
     ];
 
     /**
@@ -46,12 +50,21 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'functions' => 'array',
+            'visible_company_ids' => 'array',
+            'admin_functions' => 'array',
         ];
     }
 
     /**
      * Get the company that the user belongs to.
      */
+
+    public function scopeCompany($query)
+    {
+        return $query->where('company_id', Auth::user()->company_id);
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

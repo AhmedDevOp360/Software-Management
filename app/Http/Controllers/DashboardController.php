@@ -32,7 +32,8 @@ class DashboardController extends Controller
      */
     public function getCompanies()
     {
-        $companies = Company::select('id', 'name', 'phone')->get();
+        $user = Auth::user();
+        $companies = Company::select('id', 'name', 'phone')->where('company_id', $user->company_id)->get();
 
         return response()->json([
             'companies' => $companies

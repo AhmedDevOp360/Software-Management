@@ -35,20 +35,20 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-book w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                <a href="{{ route('admin.course-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.course-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-book w-5 h-5 {{ request()->routeIs('admin.course-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Courses</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-file-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
-                    <span class="ms-3">Documents</span>
+                <a href="{{ route('admin.document-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.document-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-file-alt w-5 h-5 {{ request()->routeIs('admin.document-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
+                    <span class="ms-3">Document Types</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-map-marker-alt w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                <a href="{{ route('admin.visit-types.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.visit-types.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-map-marker-alt w-5 h-5 {{ request()->routeIs('admin.visit-types.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Types of visit</span>
                 </a>
             </li>

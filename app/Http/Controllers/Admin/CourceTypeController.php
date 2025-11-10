@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseType;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CourceTypeController extends Controller
 {
@@ -12,7 +14,8 @@ class CourceTypeController extends Controller
      */
     public function index()
     {
-        //
+        $courseTypes = CourseType::paginate(20);
+        return view('admin.course-types.index', compact('courseTypes'));
     }
 
     /**
@@ -20,7 +23,7 @@ class CourceTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.course-types.create');
     }
 
     /**
@@ -28,7 +31,22 @@ class CourceTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'course_name' => 'required|string|max:255',
+            'validity_year' => 'required|integer|min:1',
+            'generic' => 'nullable|string|max:255',
+            'expiration' => 'nullable|date',
+            'notes' => 'nullable|string',
+        ]);
+
+        // Convert expiration using Carbon if provided
+        if (!empty($validated['expiration'])) {
+            $validated['expiration'] = Carbon::parse($validated['expiration'])->format('Y-m-d');
+        }
+
+        CourseType::create($validated);
+
+        return redirect()->route('admin.course-types.index')->with('success', 'Course type created successfully');
     }
 
     /**
@@ -36,7 +54,8 @@ class CourceTypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $courseType = CourseType::findOrFail($id);
+        return view('admin.course-types.show', compact('courseType'));
     }
 
     /**
@@ -44,7 +63,8 @@ class CourceTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $courseType = CourseType::findOrFail($id);
+        return view('admin.course-types.edit', compact('courseType'));
     }
 
     /**
@@ -52,7 +72,24 @@ class CourceTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $courseType = CourseType::findOrFail($id);
+
+        $validated = $request->validate([
+            'course_name' => 'required|string|max:255',
+            'validity_year' => 'required|integer|min:1',
+            'generic' => 'nullable|string|max:255',
+            'expiration' => 'nullable|date',
+            'notes' => 'nullable|string',
+        ]);
+
+        // Convert expiration using Carbon if provided
+        if (!empty($validated['expiration'])) {
+            $validated['expiration'] = Carbon::parse($validated['expiration'])->format('Y-m-d');
+        }
+
+        $courseType->update($validated);
+
+        return redirect()->route('admin.course-types.index')->with('success', 'Course type updated successfully');
     }
 
     /**
@@ -60,6 +97,9 @@ class CourceTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $courseType = CourseType::findOrFail($id);
+        $courseType->delete();
+
+        return redirect()->route('admin.course-types.index')->with('success', 'Course type deleted successfully');
     }
 }

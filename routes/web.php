@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CourceTypeController;
+use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VisitTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -38,6 +41,15 @@ Route::middleware('auth')->name('admin.')->group(function () {
     Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
     Route::post('/users/import', [UserController::class, 'import'])->name('users.import');
     Route::get('/users/template', [UserController::class, 'downloadTemplate'])->name('users.template');
+
+    //Cource Type routes
+    Route::resource('course-types', CourceTypeController::class);
+
+    //Document Type routes
+    Route::resource('document-types', DocumentTypeController::class);
+
+    //Visit Type routes
+    Route::resource('visit-types', VisitTypeController::class);
 
     Route::resource('users', UserController::class);
     // API route for fetching companies

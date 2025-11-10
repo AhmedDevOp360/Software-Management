@@ -1,0 +1,60 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container mx-auto px-6 py-8">
+        <!-- Page Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-gray-900">Edit Visit Type</h1>
+        </div>
+
+        @if ($errors->any())
+            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.visit-types.update', $visitType->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+
+                <!-- Row 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Name <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" placeholder="Enter visit type name" value="{{ old('name', $visitType->name) }}" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Validity Year <span class="text-red-500">*</span></label>
+                        <input type="number" name="validity_year" placeholder="Enter validity years" value="{{ old('validity_year', $visitType->validity_year) }}" min="1" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                    <textarea name="notes" placeholder="Enter notes" rows="4"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent">{{ old('notes', $visitType->notes) }}</textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-3 justify-end">
+                    <a href="{{ route('admin.visit-types.index') }}"
+                        class="bg-gray-500 text-white px-6 py-2.5 rounded-lg hover:bg-gray-600">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                        class="bg-[#0C3183] text-white px-6 py-2.5 rounded-lg hover:bg-[#0a2766]">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

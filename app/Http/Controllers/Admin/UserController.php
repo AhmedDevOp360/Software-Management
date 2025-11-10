@@ -44,8 +44,16 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'role' => ['required', 'string'],
             'functions' => ['nullable', 'array'],
-            'visible_company' => ['nullable', 'array'],
-            'admin_functions' => ['nullable', 'array'],
+            'visible_company' => ['required', 'array', 'min:1'],
+            'admin_functions' => ['required', 'array'],
+        ], [
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email address is already registered.',
+            'role.required' => 'Please select a role.',
+            'visible_company.required' => 'Please select at least one visible company.',
+            'visible_company.min' => 'Please select at least one visible company.',
+            'admin_functions.required' => 'Please select at least one admin function.',
         ]);
 
         // Generate a random password for the user
@@ -99,8 +107,15 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users,email,' . $id],
             'role' => ['required', 'string'],
             'functions' => ['nullable', 'array'],
-            'visible_company' => ['nullable', 'array'],
+            'visible_company' => ['required', 'array', 'min:1'],
             'admin_functions' => ['nullable', 'array'],
+        ], [
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email address is already registered.',
+            'role.required' => 'Please select a role.',
+            'visible_company.required' => 'Please select at least one visible company.',
+            'visible_company.min' => 'Please select at least one visible company.',
         ]);
 
         // Update the user

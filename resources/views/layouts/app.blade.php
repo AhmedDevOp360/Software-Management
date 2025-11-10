@@ -6,15 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Management Software</title>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    {{--
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{--
+    <script src="https://cdn.tailwindcss.com"></script> --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        input::placeholder,
+        textarea::placeholder,
+        select::placeholder {
+            color: gray !important;
+        }
 
-        input[type=checkbox] {
+        /* Custom circular checkbox styling - exclude settings page toggle switches */
+        input[type=checkbox]:not(.sr-only) {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -25,7 +34,8 @@
             cursor: pointer;
             position: relative;
         }
-        input[type=checkbox]:checked {
+
+        input[type=checkbox]:not(.sr-only):checked {
             print-color-adjust: exact;
             background-image: url({{ asset('assets/images/checkbox-circle.png') }});
             background-repeat: no-repeat;
@@ -51,15 +61,17 @@
 
     @include('layouts.partials.company-modal')
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    /*
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> */
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
         setTimeout(function () {
             $('.flash-message-box').hide();
         }, 5000);
-        </script>
+    </script>
 
 </body>
 

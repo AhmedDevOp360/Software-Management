@@ -13,7 +13,7 @@
     <div class="h-full px-3 py-8 overflow-y-auto bg-white border-r border-gray-200">
         <!-- Logo Text -->
         <div class="mb-8">
-            <h1 class="text-xl font-bold text-[#0C3183]">Management Software</h1>
+            <h1 class="text-lg font-bold text-[#0C3183]">Management Software</h1>
         </div>
         <ul class="space-y-2 font-medium">
             <li>
@@ -53,8 +53,8 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-gray-500 rounded-[20px] hover:text-[#0C3183] hover:bg-blue-50 group">
-                    <i class="fas fa-cog w-5 h-5 text-gray-500 transition duration-75 group-hover:text-[#0C3183]"></i>
+                <a href="{{ route('admin.settings.index') }}" class="flex items-center p-2 rounded-[20px] {{ request()->routeIs('admin.settings.*')? 'text-[#0C3183] bg-blue-50': 'text-gray-500' }} hover:text-[#0C3183] hover:bg-blue-50 group">
+                    <i class="fas fa-cog w-5 h-5 {{ request()->routeIs('admin.settings.*')? 'text-[#0C3183]': 'text-gray-500'}} transition duration-75 group-hover:text-[#0C3183]"></i>
                     <span class="ms-3">Settings</span>
                 </a>
             </li>

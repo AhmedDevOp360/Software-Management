@@ -54,7 +54,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
                         <label class="block text-sm font-semibold text-gray-900 mb-2">Email Address</label>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Lorem ipsum"
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter email"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0C3183] focus:border-transparent @error('email') border-red-500 @enderror">
                         @error('email')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -185,16 +185,16 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <!-- Visible Companies -->
                     <div>
-                        <h3 class="text-sm font-semibold text-gray-900 mb-4">Visible Companies</h3>
-                        <div class="border border-gray-300 rounded-lg p-4">
+                        <h3 class="text-sm font-semibold text-gray-900 mb-4">Visible Companies <span class="text-red-500">*</span></h3>
+                        <div class="border @error('visible_company') border-red-500 @else border-gray-300 @enderror rounded-lg p-4">
                             <div class="mb-3">
-                                <p class="w-full px-3 py-2 text-sm ">
+                                <p class="w-full px-3 text-sm ">
                                     Near
                                 </p>
                             </div>
-                            <div class="h-[10rem] overflow-y-auto space-y-3 px-2 custom-scrollbar">
+                            <div class="h-[10rem] overflow-y-auto space-y-1 custom-scrollbar">
                                 @foreach ($companies as $company)
-                                    <label class="flex items-center gap-3 cursor-pointer">
+                                    <label class="flex items-center gap-3 cursor-pointer has-[:checked]:border has-[:checked]:border-[#0C3183] p-2 has-[:checked]:rounded-lg has-[:checked]:bg-blue-50">
                                         <input type="checkbox" name="visible_company[]" value="{{ $company->id }}"
                                             {{ in_array($company->id, old('visible_company', [])) ? 'checked' : '' }}
                                             class="w-6 h-6 appearance-none bg-white border-2 border-gray-400 rounded-full cursor-pointer checked:border-[5px] checked:border-[#0C3183] ">
@@ -203,6 +203,9 @@
                                 @endforeach
                             </div>
                         </div>
+                        @error('visible_company')
+                            <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Administration Functions -->

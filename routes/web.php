@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CourceTypeController;
 use App\Http\Controllers\Admin\DocumentTypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VisitTypeController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -50,6 +51,11 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
     //Visit Type routes
     Route::resource('visit-types', VisitTypeController::class);
+
+    // Settings routes
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::post('/settings/test', [SettingController::class, 'testSmtp'])->name('settings.test');
 
     Route::resource('users', UserController::class);
     // API route for fetching companies
